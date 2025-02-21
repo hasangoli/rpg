@@ -11,6 +11,17 @@ class Create extends StatefulWidget {
 }
 
 class _CreateState extends State<Create> {
+  final _nameController = TextEditingController();
+  final _sloganController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _sloganController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +52,7 @@ class _CreateState extends State<Create> {
               height: 30,
             ),
             TextField(
+              controller: _nameController,
               style: GoogleFonts.poppins(
                 textStyle: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -54,6 +66,7 @@ class _CreateState extends State<Create> {
               height: 20,
             ),
             TextField(
+              controller: _sloganController,
               style: GoogleFonts.poppins(
                 textStyle: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -63,6 +76,8 @@ class _CreateState extends State<Create> {
                 label: StyledText('Character Slogan'),
               ),
             ),
+            StyledText(_nameController.value.text),
+            StyledText(_sloganController.value.text),
           ],
         ),
       ),
