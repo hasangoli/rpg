@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rpg/models/vocation.dart';
+import 'package:rpg/screens/create/vocation_card.dart';
+import 'package:rpg/shared/styled_button.dart';
 import 'package:rpg/shared/styled_text.dart';
 import 'package:rpg/theme.dart';
 
@@ -22,6 +25,25 @@ class _CreateState extends State<Create> {
     super.dispose();
   }
 
+  Vocation selectedVocation = Vocation.junkie;
+
+  void updateVocation(Vocation vocation) {
+    setState(() {
+      selectedVocation = vocation;
+    });
+  }
+
+  void handleSubmit() {
+    if (_nameController.text.trim().isEmpty) {
+      print('Name must not be empty');
+      return;
+    }
+    if (_sloganController.text.trim().isEmpty) {
+      print('Slogan must not be empty');
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,51 +56,96 @@ class _CreateState extends State<Create> {
           vertical: 30,
           horizontal: 20,
         ),
-        child: Column(
-          children: [
-            Center(
-              child: Icon(
-                Icons.code,
-                color: AppColors.primaryColor,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Icon(
+                  Icons.code,
+                  color: AppColors.primaryColor,
+                ),
               ),
-            ),
-            Center(
-              child: StyledHeading('Welcome, new player.'),
-            ),
-            Center(
-              child: StyledText('Create a name and slogan for your character.'),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: _nameController,
-              style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.bodyMedium,
+              Center(
+                child: StyledHeading('Welcome, new player.'),
               ),
-              cursorColor: AppColors.textColor,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.person_2),
-                label: StyledText('Character Name'),
+              Center(
+                child:
+                    StyledText('Create a name and slogan for your character.'),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: _sloganController,
-              style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.bodyMedium,
+              SizedBox(
+                height: 30,
               ),
-              cursorColor: AppColors.textColor,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.chat),
-                label: StyledText('Character Slogan'),
+              TextField(
+                controller: _nameController,
+                style: GoogleFonts.poppins(
+                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                ),
+                cursorColor: AppColors.textColor,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.person_2),
+                  label: StyledText('Character Name'),
+                ),
               ),
-            ),
-            StyledText(_nameController.value.text),
-            StyledText(_sloganController.value.text),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _sloganController,
+                style: GoogleFonts.poppins(
+                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                ),
+                cursorColor: AppColors.textColor,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.chat),
+                  label: StyledText('Character Slogan'),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: Icon(
+                  Icons.code,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              Center(
+                child: StyledHeading('Choose a vocation.'),
+              ),
+              Center(
+                child: StyledText('This determines your available skins.'),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              VocationCard(
+                onTap: updateVocation,
+                vocation: Vocation.junkie,
+                selected: selectedVocation == Vocation.junkie,
+              ),
+              VocationCard(
+                onTap: updateVocation,
+                vocation: Vocation.ninja,
+                selected: selectedVocation == Vocation.ninja,
+              ),
+              VocationCard(
+                onTap: updateVocation,
+                vocation: Vocation.raider,
+                selected: selectedVocation == Vocation.raider,
+              ),
+              VocationCard(
+                onTap: updateVocation,
+                vocation: Vocation.wizard,
+                selected: selectedVocation == Vocation.wizard,
+              ),
+              Center(
+                child: StyledButton(
+                  onPressed: handleSubmit,
+                  child: StyledHeading('Create Character'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
