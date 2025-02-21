@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rpg/models/character.dart';
 import 'package:rpg/models/vocation.dart';
 import 'package:rpg/screens/create/vocation_card.dart';
+import 'package:rpg/screens/home/home.dart';
 import 'package:rpg/shared/styled_button.dart';
 import 'package:rpg/shared/styled_text.dart';
 import 'package:rpg/theme.dart';
@@ -52,6 +53,11 @@ class _CreateState extends State<Create> {
         vocation: selectedVocation,
         id: uuid.v4(),
       ),
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (ctx) => Home()),
     );
   }
 
